@@ -1,19 +1,28 @@
 <script setup lang="ts">
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
-import HelloWorld from './components/HelloWorld.vue'
+import { ref } from 'vue';
+import XhSwitch from './components/Switch/Switch.vue';
+import DarkIcon from './assets/svg/dark.svg?component';
+import DayIcon from './assets/svg/day.svg?component';
+const data = ref(true);
+const test = (val: boolean) => {
+  console.log('val', val);
+  data.value = !data.value;
+};
+setTimeout(() => {
+  data.value = false;
+}, 2000);
 </script>
 
 <template>
   <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
+    <XhSwitch
+      v-model="data"
+      :active-icon="DayIcon"
+      :inactive-icon="DarkIcon"
+      inline-prompt
+      @change="test"
+    ></XhSwitch>
   </div>
-  <HelloWorld msg="Vite + Vue" />
 </template>
 
 <style scoped>
