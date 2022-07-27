@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue';
 import XhIcon from '../Icon/Icon.vue';
-// const checked = ref(true);
 
 const props = defineProps({
   modelValue: {
@@ -32,6 +31,9 @@ const props = defineProps({
     type: [Boolean, String, Number],
     default: false,
   },
+  tabindex: {
+    type: [String, Number],
+  },
 });
 
 watch(
@@ -50,9 +52,9 @@ watch(
 
 const emit = defineEmits(['change']);
 const isActive = ref(props.modelValue !== false);
-const actualValue = computed(() => {
-  return isActive.value ? props.modelValue : props.value;
-});
+const actualValue = computed(() =>
+  isActive.value ? props.modelValue : props.value
+);
 const checked = computed(() => actualValue.value === props.activeValue);
 const handleChange = () => {
   emit('change', checked);
@@ -64,7 +66,16 @@ const handleChange = () => {
     @click="handleChange"
     :class="['xh-switch', { 'is-checked': checked ? true : false }]"
   >
-    <input class="xh-switch__input" type="checkbox" />
+    <input
+      id="xh-switch"
+      class="xh-switch__input"
+      type="checkbox"
+      role="switch"
+      name="XhSwitch"
+      :tabindex="tabindex"
+      :aria-checked="checked"
+      @keydown.enter="handleChange"
+    />
     <span class="xh-switch__core">
       <div v-if="inlinePrompt" class="xh-switch__inner">
         <template v-if="activeIcon || inactiveIcon">
@@ -122,6 +133,14 @@ const handleChange = () => {
     height: 0;
     opacity: 0;
     margin: 0;
+    // focus-visible相比focus解决了用户使用键盘操作视图出现的样式突兀的尴尬场景,让我们有了对键盘操作视图的样式修改能力
+    //https://css-tricks.com/almanac/selectors/f/focus-visible/
+    &:focus-visible {
+      & ~ .xh-switch__core {
+        outline: 2px solid var(--xh-switch-on-color);
+        outline-offset: 1px;
+      }
+    }
   }
 
   .xh-switch__core {

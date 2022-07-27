@@ -8,9 +8,9 @@ const test = (val: boolean) => {
   console.log('val', val);
   data.value = !data.value;
 };
-setTimeout(() => {
-  data.value = false;
-}, 2000);
+// setTimeout(() => {
+//   data.value = false;
+// }, 2000);
 </script>
 
 <template>
