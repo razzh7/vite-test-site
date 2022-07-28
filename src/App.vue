@@ -3,6 +3,7 @@ import { ref } from 'vue';
 import XhSwitch from './components/Switch/Switch.vue';
 import DarkIcon from './assets/svg/dark.svg?component';
 import DayIcon from './assets/svg/day.svg?component';
+console.log('DarkIcon', DarkIcon);
 const data = ref(true);
 const test = (val: boolean) => {
   console.log('val', val);
@@ -15,13 +16,7 @@ const test = (val: boolean) => {
 
 <template>
   <div>
-    <XhSwitch
-      v-model="data"
-      :active-icon="DayIcon"
-      :inactive-icon="DarkIcon"
-      inline-prompt
-      @change="test"
-    ></XhSwitch>
+    <XhSwitch v-model="data" @change="test"></XhSwitch>
   </div>
 </template>
 

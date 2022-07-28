@@ -17,11 +17,11 @@ const props = defineProps({
   },
   activeIcon: {
     type: [Function, Object],
-    default: '',
+    default: () => {},
   },
   inactiveIcon: {
     type: [Function, Object],
-    default: '',
+    default: () => {},
   },
   activeValue: {
     type: [Boolean, String, Number],
